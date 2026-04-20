@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+amh_venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# Data files 
+data/original/
+data/processed/
+data/lexicons/
+
+# Results 
+results/models/
+results/features/
+results/plots/
+results/logs/
+results/evaluation/
+
+# But keep folder structure with README or .gitkeep files
+!results/.gitkeep
+!data/.gitkeep
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# HuggingFace cache
+.cache/
+*.bin
+*.safetensors
+*.pth
+*.pt
+
+# Numpy archives (feature files)
+*.npz
+*.pkl
+*.joblib
+
+# Large CSV files
+*.csv
+
+# But keep small config/sample CSVs if needed
+!config/*.csv
+
+# Secrets
+.env
+*.key
+credentials.json
