@@ -48,7 +48,7 @@ desktop.ini
 *.joblib
 
 # Large CSV files
-*.csv
+results/**/*.csv
 
 # But keep small config/sample CSVs if needed
 !config/*.csv
