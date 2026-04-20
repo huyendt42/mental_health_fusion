@@ -59,8 +59,3 @@ See `requirements.txt`. Main dependencies:
 - spaCy, NLTK
 - pandas, numpy, scikit-learn
 - matplotlib, seaborn
-
-## Author
-
-Duong Thi Huyen — huyen.dt224317@sis.hust.edu.vn
-Supervised by Prof. Do Thi Ngoc Diep
