@@ -1,0 +1,12 @@
+{
+  "extraction_timestamp": "2026-05-05T16:52:36.845415+00:00",
+  "row_count": 1488,
+  "model_versions": {
+    "transformers": "5.7.0",
+    "sentence_transformers": "5.4.1"
+  },
+  "dimensions": {
+    "affective.vader": 3
+  },
+  "split": "val"
+}

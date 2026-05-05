@@ -6,12 +6,13 @@ Graduation research project at Hanoi University of Science and Technology.
 
 This project classifies mental health conditions from Reddit posts using a multi-aspect feature fusion approach that combines:
 
-- **Semantic features** — MentalRoBERTa embeddings, psycholinguistic ratios, lexical diversity
+- **Semantic features** — MentalRoBERTa embeddings
+- **Lexical features** — MTLD, word rates, pronouns, punctuation markers
+- **Syntactic features** — Complexity, POS ratios, readability
 - **Affective features** — GoEmotions scores, VAD scores, sentiment arc
-- **Structural features** — Speech graph cohesion, discourse coherence, tense distribution
-- **Stylistic features** — POS ratios, readability, hedging markers
+- **Structural features** — Sentence coherence, topic drift, coherence breaks, tense distribution
 
-Features are combined via a **gated fusion network** trained with **GradNorm** loss balancing.
+Features are combined with **late concatenation fusion** by default, with a gated fusion baseline available for comparison.
 
 ## Dataset
 
@@ -24,11 +25,12 @@ ADHD, Anxiety, Bipolar, Depression, PTSD, None (control).
 scripts/
 ├── config.py                     # Central config
 ├── data/                         # Data preprocessing & EDA
-├── features/                     # Feature extraction (4 groups)
+├── features/                     # Feature extraction (5 groups)
 │   ├── semantic/
+│   ├── lexical/
+│   ├── syntactic/
 │   ├── affective/
-│   ├── structural/
-│   └── stylistic/
+│   └── structural/
 ├── analysis/                     # Statistical heatmaps
 ├── models/                       # Fusion network + baselines
 └── evaluation/                   # Metrics & ablation

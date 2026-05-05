@@ -1,0 +1,128 @@
+from __future__ import annotations
+
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import torch
+
+from scripts import config
+
+GROUP_SUBFEATURES = {
+    "semantic": ["mental_roberta"],
+    "lexical": ["diversity", "word_rates", "pronouns", "punctuation"],
+    "syntactic": ["complexity", "pos_ratios", "readability"],
+    "structural": ["coherence", "tense"],
+    "affective": ["goemotions", "vad", "vader"],
+}
+
+GROUP_DIRS = {
+    "semantic": config.SEMANTIC_FEATURES_DIR,
+    "lexical": config.LEXICAL_FEATURES_DIR,
+    "syntactic": config.SYNTACTIC_FEATURES_DIR,
+    "structural": config.STRUCTURAL_FEATURES_DIR,
+    "affective": config.AFFECTIVE_FEATURES_DIR,
+}
+
+
+def _features_to_matrix(series: pd.Series) -> np.ndarray:
+    return np.asarray(series.tolist(), dtype=np.float32)
+
+
+def _subextractor_feature_path(group: str, sub_name: str, split: str | None = None) -> Path:
+    base_dir = GROUP_DIRS[group]
+    if split:
+        base_dir = base_dir / split
+
+    candidate = base_dir / f"{sub_name}.parquet"
+    if candidate.exists():
+        return candidate
+
+    if split:
+        candidate_split = base_dir / f"{sub_name}_{split}.parquet"
+        if candidate_split.exists():
+            return candidate_split
+
+    return candidate
+
+
+def load_subextractor_features(
+    group: str,
+    sub_name: str,
+    split: str | None = None,
+) -> tuple[list, np.ndarray]:
+    path = _subextractor_feature_path(group, sub_name, split=split)
+    if not path.exists():
+        raise FileNotFoundError(f"Missing feature parquet: {path}")
+    df = pd.read_parquet(path)
+    if "post_id" not in df.columns or "features" not in df.columns:
+        raise ValueError(f"{path} must contain columns: post_id, features")
+    return df["post_id"].tolist(), _features_to_matrix(df["features"])
+
+
+def _normalize_post_ids(post_ids: list[str]) -> list[str]:
+    """Normalize post_ids to remove prefixes like 'train_', 'val_', etc."""
+    normalized = []
+    for pid in post_ids:
+        if '_' in pid:
+            parts = pid.split('_')
+            if len(parts) >= 2 and parts[-1].isdigit():
+                normalized.append(parts[-1])
+            else:
+                normalized.append(pid)
+        else:
+            normalized.append(pid)
+    return normalized
+
+
+def load_group_features(group: str, split: str | None = None) -> tuple[list, np.ndarray]:
+    if group not in GROUP_SUBFEATURES:
+        raise ValueError(f"Unknown group: {group}")
+
+    reference_ids = None
+    matrices = []
+    for sub_name in GROUP_SUBFEATURES[group]:
+        post_ids, matrix = load_subextractor_features(group, sub_name, split=split)
+        normalized_ids = _normalize_post_ids(post_ids)
+        if reference_ids is None:
+            reference_ids = normalized_ids
+        elif normalized_ids != reference_ids:
+            raise AssertionError(f"post_id order mismatch in {group}.{sub_name} after normalization")
+        matrices.append(matrix)
+
+    return reference_ids or [], np.concatenate(matrices, axis=1).astype(np.float32)
+
+
+def load_fusion_feature_tensors(
+    split: str | None = None,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, list]:
+    semantic_ids, semantic = load_group_features("semantic", split=split)
+    affective_ids, affective = load_group_features("affective", split=split)
+
+    handcrafted_parts = []
+    handcrafted_ids = None
+    for group in ["lexical", "syntactic", "structural"]:
+        ids, matrix = load_group_features(group, split=split)
+        if handcrafted_ids is None:
+            handcrafted_ids = ids
+        elif ids != handcrafted_ids:
+            raise AssertionError(f"post_id order mismatch in handcrafted group {group}")
+        handcrafted_parts.append(matrix)
+
+    if semantic_ids != affective_ids or semantic_ids != handcrafted_ids:
+        raise AssertionError("post_id order mismatch across semantic, affective, and handcrafted inputs")
+
+    handcrafted = np.concatenate(handcrafted_parts, axis=1).astype(np.float32)
+    if semantic.shape[1] != config.SEMANTIC_DIM:
+        raise ValueError(f"semantic dim {semantic.shape[1]} != {config.SEMANTIC_DIM}")
+    if affective.shape[1] != config.AFFECTIVE_DIM:
+        raise ValueError(f"affective dim {affective.shape[1]} != {config.AFFECTIVE_DIM}")
+    if handcrafted.shape[1] != config.HANDCRAFTED_DIM:
+        raise ValueError(f"handcrafted dim {handcrafted.shape[1]} != {config.HANDCRAFTED_DIM}")
+
+    return (
+        torch.from_numpy(semantic),
+        torch.from_numpy(affective),
+        torch.from_numpy(handcrafted),
+        semantic_ids,
+    )

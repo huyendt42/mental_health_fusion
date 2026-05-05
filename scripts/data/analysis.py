@@ -1,5 +1,6 @@
 # scripts/data/analysis.py
 
+import re
 import logging
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -13,14 +14,6 @@ from scripts.config import (
     MAX_LENGTH                         # RoBERTa token limit (512)
 )
 
-# =============================================================================
-# LOGGING SETUP
-# =============================================================================
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
-)
 logger = logging.getLogger(__name__)
 
 
@@ -57,8 +50,6 @@ def load_processed_splits() -> dict[str, pd.DataFrame]:
 
     datasets = {}
     for name, path in splits.items():
-        path = Path(path)
-
         if not path.exists():
             raise FileNotFoundError(
                 f"Processed file not found: {path}\n"
@@ -88,7 +79,6 @@ def count_sentences(text: str) -> int:
     We use a simple rule here because this is only for analysis,
     not for feature extraction. Speed matters more than perfection.
     """
-    import re
     sentences = re.split(r'[.!?]+', str(text))
     # Filter out empty strings that result from the split
     sentences = [s.strip() for s in sentences if s.strip()]

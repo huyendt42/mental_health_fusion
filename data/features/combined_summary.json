@@ -1,0 +1,203 @@
+{
+  "train": {
+    "semantic": {
+      "group": "semantic",
+      "split": "train",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\semantic\\train\\combined.parquet",
+      "rows": 13727,
+      "feature_dim": 768,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 768
+    },
+    "affective": {
+      "group": "affective",
+      "split": "train",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\affective\\train\\combined.parquet",
+      "rows": 13727,
+      "feature_dim": 34,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 34
+    },
+    "lexical": {
+      "group": "lexical",
+      "split": "train",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\lexical\\train\\combined.parquet",
+      "rows": 13727,
+      "feature_dim": 11,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 11
+    },
+    "syntactic": {
+      "group": "syntactic",
+      "split": "train",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\syntactic\\train\\combined.parquet",
+      "rows": 13727,
+      "feature_dim": 8,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 8
+    },
+    "structural": {
+      "group": "structural",
+      "split": "train",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\structural\\train\\combined.parquet",
+      "rows": 13727,
+      "feature_dim": 7,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 7
+    }
+  },
+  "val": {
+    "semantic": {
+      "group": "semantic",
+      "split": "val",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\semantic\\val\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 768,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 768
+    },
+    "affective": {
+      "group": "affective",
+      "split": "val",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\affective\\val\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 34,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 34
+    },
+    "lexical": {
+      "group": "lexical",
+      "split": "val",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\lexical\\val\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 11,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 11
+    },
+    "syntactic": {
+      "group": "syntactic",
+      "split": "val",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\syntactic\\val\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 8,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 8
+    },
+    "structural": {
+      "group": "structural",
+      "split": "val",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\structural\\val\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 7,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 7
+    }
+  },
+  "test": {
+    "semantic": {
+      "group": "semantic",
+      "split": "test",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\semantic\\test\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 768,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 768
+    },
+    "affective": {
+      "group": "affective",
+      "split": "test",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\affective\\test\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 34,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 34
+    },
+    "lexical": {
+      "group": "lexical",
+      "split": "test",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\lexical\\test\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 11,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 11
+    },
+    "syntactic": {
+      "group": "syntactic",
+      "split": "test",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\syntactic\\test\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 8,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 8
+    },
+    "structural": {
+      "group": "structural",
+      "split": "test",
+      "path": "C:\\Users\\ASUS11\\Downloads\\nlp\\grad project\\code\\mental_health_fusion\\data\\features\\structural\\test\\combined.parquet",
+      "rows": 1488,
+      "feature_dim": 7,
+      "sample_post_ids": [
+        "0",
+        "1",
+        "2"
+      ],
+      "sample_features_shape": 7
+    }
+  }
+}

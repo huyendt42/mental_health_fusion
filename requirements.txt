@@ -1,0 +1,26 @@
+# ── Deep learning ─────────────────────────────────────────────────────────────
+torch>=2.1.0
+transformers>=4.40.0
+datasets>=2.18.0          # tokenized dataset caching (roberta_embed.py)
+evaluate>=0.4.0           # accuracy / f1 metrics (roberta_embed.py)
+accelerate>=0.27.0        # required by HuggingFace Trainer
+
+# ── Embeddings & NLP ──────────────────────────────────────────────────────────
+sentence-transformers>=2.6.0   # discourse coherence (all-MiniLM-L6-v2)
+spacy>=3.7.0                   # POS tagging, dependency parsing, morphology
+                               # After install: python -m spacy download en_core_web_sm
+
+# ── Lexical / affective features ──────────────────────────────────────────────
+vaderSentiment>=3.3.2     # sentence-level sentiment arc
+lexicalrichness>=0.4.0    # MTLD lexical diversity
+textstat>=0.7.3           # Flesch-Kincaid & Gunning Fog readability
+
+# ── Data handling ─────────────────────────────────────────────────────────────
+pandas>=2.1.0
+numpy>=1.26.0
+pyarrow>=14.0.0           # parquet read/write (feature store)
+scikit-learn>=1.3.0       # baselines (TF-IDF + SVM) and evaluation utilities
+
+# ── Visualisation ─────────────────────────────────────────────────────────────
+matplotlib>=3.8.0
+seaborn>=0.13.0

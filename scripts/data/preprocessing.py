@@ -3,7 +3,6 @@
 import re
 import logging
 import pandas as pd
-from pathlib import Path
 
 from scripts.config import (
     RAW_TRAIN_PATH, RAW_VAL_PATH, RAW_TEST_PATH,  # Where to read from
@@ -12,25 +11,9 @@ from scripts.config import (
     TEXT_COL, LABEL_COL, CLASS_NAME_COL,           # Output column names
     MERGE_SEPARATOR,                               # ": " between title and post
     PROCESSED_DIR,                                 # Folder to create if needed
-    SEED                                           # For reproducibility
 )
 
-# =============================================================================
-# LOGGING SETUP
-# =============================================================================
-# logging is Python's built-in way to record what your program is doing.
-# Unlike print(), logging lets you control the level of detail (DEBUG, INFO,
-# WARNING, ERROR) and write to a file as well as the console.
-# For a research project, having a log of what preprocessing did is valuable
-# when you need to report it in your thesis or debug an issue weeks later.
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
-)
 logger = logging.getLogger(__name__)
-# __name__ gives this logger the name of this module (preprocessing),
-# so in the log output you can see exactly which file produced each message.
 
 
 # =============================================================================
@@ -55,8 +38,6 @@ def load_raw_splits() -> dict[str, pd.DataFrame]:
 
     datasets = {}
     for name, path in splits.items():
-        path = Path(path)
-
         if not path.exists():
             # Raise immediately with a clear message rather than letting
             # pandas raise a confusing FileNotFoundError later.
@@ -176,7 +157,7 @@ def clean_text(text: str) -> str:
     - Numbers kept:     "I haven't slept in 3 days" — the number matters
     - Punctuation kept: "...", "?", "!" carry emotional signal in this domain
     - Case kept:        UPPERCASE can signal emotional intensity
-    - No stopword removal: we want psycholinguistic ratios to be accurate
+    - No stopword removal: we want lexical word and pronoun rates to be accurate
     """
     if not isinstance(text, str):
         return ""
